@@ -12,6 +12,16 @@
 <input type="text" id="productName" placeholder="Nom du parfum">
 <button onclick="createProduct()">Créer le parfum</button>
 
+<h2>Enregistrement</h2>
+<!-- Formulaire d'enregistrement -->
+<input type="text" id="username" placeholder="Entrez votre nom d'utilisateur" />
+<button onclick="registerUser()">S'enregistrer</button>
+<h2>Authentification</h2>
+<!-- Affichage du statut de l'utilisateur -->
+<button onclick="authenticateUser()">Vérifier l'utilisateur</button>
+<div id="userStatus"></div>
+
+
 <h2>Mettre à jour l'état du produit</h2>
 <input type="number" id="productId" placeholder="ID du produit">
 <select id="productState">
