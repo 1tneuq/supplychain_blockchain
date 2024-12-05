@@ -10,7 +10,7 @@
 
 <h2>Create un nouveau produit</h2>
 <input type="text" id="productName" placeholder="Nom du parfum">
-<button onclick="createProduct()">Créer le parfum</button>
+<button onclick="createProductWithAuth()">Créer le parfum</button>
 
 <h2>Enregistrement</h2>
 <!-- Formulaire d'enregistrement -->
@@ -29,11 +29,11 @@
     <option value="1">Expédié</option>
     <option value="2">Livré</option>
 </select>
-<button onclick="updateProductState()">Mettre à jour</button>
+<button onclick="updateProductStateWithAuth()">Mettre à jour</button>
 
 <h2>Récupérer les informations d'un produit</h2>
 <input type="number" id="productIdInfo" placeholder="ID du produit">
-<button onclick="getProduct()">Récupérer les informations</button>
+<button onclick="getProductWithAuth()">Récupérer les informations</button>
 <div id="productInfo"></div>
 
 <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.3.0/dist/web3.min.js"></script>

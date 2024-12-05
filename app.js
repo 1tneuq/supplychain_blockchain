@@ -6,7 +6,7 @@ if (typeof window.ethereum !== 'undefined') {
 
 //instance supply chain
 const web3 = new Web3(window.ethereum);
-const supplyChainAddress = '0x553F970d3f2c6734602EEf0191380C64D4912705'; // Adresse du contratnpm start supply chain a changer apres migrate
+const supplyChainAddress = '0xacF189b26836357e733b30A343B216dc60147FF9'; // Adresse du contratnpm start supply chain a changer apres migrate
 const supplyChainabi = [ // tableau à changer après chaque migrate
     {
         "anonymous": false,
@@ -147,8 +147,8 @@ const supplyChainabi = [ // tableau à changer après chaque migrate
     }
 ];
 //instance authentification
-const authAddress = '0x08Bfd40bf022A00e919Af563a6b05D2501E7f47c'; // Adresse de Auth.sol
-const authAbi = [
+const authAddress = '0x2aC1a9E1638713A89bd65a426DC07C763A675Ff7'; // Adresse de Auth.sol
+const authAbi = [ // tableau à changer après chaque migrate
     {
         "anonymous": false,
         "inputs": [
@@ -233,8 +233,17 @@ async function createProductWithAuth() {
 }
 
 
-async function updateProductState() {
+async function updateProductStateWithAuth() {
     const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+    try{
+        const username = await auth.methods.authenticate().call({ from: accounts[0] });
+        console.log(`Utilisateur authentifié : ${username}`)
+
+    }
+    catch (error) {
+        console.error('Erreur d\'authentification:', error);
+        alert('Vous devez être enregistré pour mettre à jour un produit.');
+    }
     const productId = document.getElementById('productId').value;
     const state = document.getElementById('productState').value;
 
@@ -242,13 +251,22 @@ async function updateProductState() {
         .on('receipt', (receipt) => {
             console.log('Product State Updated:', receipt);
         });
+
 }
 
-async function getProduct() {
-    const productId = document.getElementById('productIdInfo').value;
+async function getProductWithAuth() {
+    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+    try{
+        const username = await auth.methods.authenticate().call({ from: accounts[0] });
+        console.log(`Utilisateur authentifié : ${username}`)
+        const productId = document.getElementById('productIdInfo').value;
+        const product = await supplyChain.methods.getProduct(productId).call();
+        document.getElementById('productInfo').innerText = `Product ID: ${product[0]}, Name: ${product[1]}, State: ${product[2]}`;}
+    catch (error) {
+        console.error('Erreur d\'authentification:', error);
+        alert('Vous devez être enregistré pour obtenir un produit.');
+    }
 
-    const product = await supplyChain.methods.getProduct(productId).call();
-    document.getElementById('productInfo').innerText = `Product ID: ${product[0]}, Name: ${product[1]}, State: ${product[2]}`;
 }
 
 
