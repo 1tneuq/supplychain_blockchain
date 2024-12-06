@@ -3,99 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Supply Chain Parfumerie</title>
-    <!-- Bootstrap CSS -->
+    <title>Authentification</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-image: url('https://www.labellemeche.com/cdn/shop/files/slider-parfumerie-creative_1024x1024.jpg?v=1681230820');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center center;
-            height: max-content;
-        }
-
-        .my-section {
-            background-color: rgba(255, 255, 255, 0.8); /* Fond blanc semi-transparent */
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px auto; /* Centre horizontalement */
-            max-width: 600px; /* Largeur maximale pour le texte */
-            text-align: center;
-        }
-
-        h2, p {
-            color: black;
-            margin: 0;
-        }
-    </style>
+<style>
+    body{
+        background-image: url("https://c4.wallpaperflare.com/wallpaper/337/541/307/flower-stones-perfume-bamboo-wallpaper-preview.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        height: 100vh;
+    }
+</style>
 </head>
 <body>
-<div class="container my-5 my-section">
-    <h1 class="text-center text-primary">Supply Chain Parfumerie (Blockchain GS16)</h1>
-    <hr>
-
-    <!-- Section Création de produit -->
-    <div class="my-4 my-section">
-        <h2>Créer un nouveau produit</h2>
-        <div class="input-group mb-3">
-            <input type="text" id="productName" class="form-control" placeholder="Nom du parfum">
-            <button class="btn btn-success" onclick="createProductWithAuth()">Créer le parfum</button>
+<div class="container mt-5">
+    <div class="auth-container text-center">
+        <h1>Authentification</h1>
+        <div class="mb-4 p-3 bg-dark text-white rounded">
+        <p><strong>Connectez-vous ou inscrivez-vous pour accéder à la plateforme.</strong></p>
         </div>
-    </div>
 
-    <!-- Section Enregistrement -->
-    <div class="my-4 my-section">
-        <h2>Enregistrement</h2>
-        <div class="input-group mb-3">
-            <input type="text" id="username" class="form-control" placeholder="Entrez votre nom d'utilisateur">
-            <button class="btn btn-primary" onclick="registerUser()">S'enregistrer</button>
+        <div class="mb-4">
+            <input type="text" id="username" class="form-control mb-2" placeholder="Nom d'utilisateur">
+            <button class="btn btn-success" onclick="registerUser()">S'inscrire</button>
         </div>
-    </div>
-
-    <!-- Section Authentification -->
-    <div class="my-4 my-section">
-        <h2>Authentification</h2>
-        <button class="btn btn-info" onclick="authenticateUser()">Vérifier l'utilisateur</button>
-        <div id="userStatus" class="mt-3 alert alert-secondary"></div>
-    </div>
-
-    <!-- Section Mise à jour de l'état -->
-    <div class="my-4 my-section">
-        <h2>Mettre à jour l'état du produit</h2>
-        <div class="row g-2 mb-3">
-            <div class="col-md-6">
-                <input type="number" id="productId" class="form-control" placeholder="ID du produit">
-            </div>
-            <div class="col-md-6">
-                <select id="productState" class="form-select">
-                    <option value="0">Fabriqué</option>
-                    <option value="1">Expédié</option>
-                    <option value="2">Livré</option>
-                </select>
-            </div>
-        </div>
-        <button class="btn btn-warning" onclick="updateProductStateWithAuth()">Mettre à jour</button>
-    </div>
-
-    <!-- Section Récupération d'information -->
-    <div class="my-4 my-section">
-        <h2>Récupérer les informations d'un produit</h2>
-        <div class="input-group mb-3">
-            <input type="number" id="productIdInfo" class="form-control" placeholder="ID du produit">
-            <button class="btn btn-dark" onclick="getProductWithAuth()">Récupérer les informations</button>
-        </div>
-        <div id="productInfo" class="alert alert-secondary"></div>
+        <button class="btn btn-primary" onclick="authenticateUser()">Se connecter avec MetaMask</button>
     </div>
 </div>
-
-<!-- Bootstrap JS Bundle (optional) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Web3.js -->
 <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.3.0/dist/web3.min.js"></script>
-<!-- App JS -->
 <script src="app.js"></script>
 </body>
 </html>

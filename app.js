@@ -1,9 +1,16 @@
 // Chargement Web3 et connexion a metamask
-if (typeof window.ethereum !== 'undefined') {
-    console.log('MetaMask ok');
-    ethereum.request({ method: 'eth_requestAccounts' });
-}
-
+// Fonction appelée au chargement de la page
+window.onload = async () => {
+    if (typeof window.ethereum !== 'undefined') {
+        console.log('MetaMask détecté');
+        // Utilisation de `await` dans une fonction `async`
+        await ethereum.request({ method: 'eth_requestAccounts' });
+        await initializeContracts();
+        await checkAuthentication();  // Vérifier l'authentification
+    } else {
+        console.log('MetaMask non détecté');
+    }
+};
 //instance supply chain
 const web3 = new Web3(window.ethereum);
 
@@ -73,6 +80,22 @@ async function updateProductStateWithAuth() {
 
 }
 
+async function createProductWithAuth() {
+    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+
+    try {
+        const username = await auth.methods.authenticate().call({ from: accounts[0] });
+        console.log(`Utilisateur authentifié : ${username}`);
+
+        const name = document.getElementById('productName').value;
+        await supplyChain.methods.createProduct(name).send({ from: accounts[0] });
+        alert('Produit créé avec succès.');
+    } catch (error) {
+        console.error('Erreur d\'authentification:', error);
+        alert('Vous devez être enregistré pour créer un produit.');
+    }
+}
+
 async function getProductWithAuth() {
     const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
     try{
@@ -122,20 +145,40 @@ async function registerUser() {
 
 
 
+// Authentifier un utilisateur
 async function authenticateUser() {
-    // Demander à Metamask d'afficher l'adresse
-    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-    const account = accounts[0];  // L'adresse du compte Metamask
-
-    // Appel au contrat intelligent pour récupérer le nom de l'utilisateur
     try {
+        const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+        const account = accounts[0];
+
+        // Utilisez le bon contrat auth
         const username = await auth.methods.authenticate().call({ from: account });
-        document.getElementById('userStatus').innerText = `Nom d'utilisateur : ${username}`;
+
+        alert(`Bienvenue, ${username}`);
+        // Redirection après authentification
+        window.location.href = 'supplychain.html';
     } catch (error) {
-        console.error('Utilisateur non enregistré:', error);
-        document.getElementById('userStatus').innerText = 'Utilisateur non enregistré';
+        console.error('Erreur d\'authentification :', error);
+        alert('Authentification échouée. Veuillez vous inscrire d\'abord.');
     }
 }
 
+
+
+// Vérifier l'authentification pour accéder à index.html
+async function checkAuthentication() {
+    try {
+        const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+        const account = accounts[0];
+
+        const username = await auth.methods.authenticate().call({ from: account });
+
+        console.log(`Utilisateur authentifié : ${username}`);
+    } catch (error) {
+        console.error('Accès refusé :', error);
+        alert('Vous devez être authentifié pour accéder à cette page.');
+        window.location.href = 'index.html';  // Rediriger l'utilisateur vers la page d'authentification
+    }
+}
 
 

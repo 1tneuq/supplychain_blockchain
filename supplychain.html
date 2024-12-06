@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supply Chain Parfumerie</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-image: url('https://www.dior.com/on/demandware.static/-/Library-Sites-DiorSharedLibrary/default/dwba2dabd8/images/beauty/01-FRAGRANCES/2024/SAUVAGE-EAU-FORTE/PLP/A24F094_SAUVAGE_EAU_FORTE_Instit_Pack_3000x2250.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+      height: max-content;
+    }
+
+    .my-section {
+      background-color: rgba(255, 255, 255, 0.8); /* Fond blanc semi-transparent */
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px auto; /* Centre horizontalement */
+      max-width: 600px; /* Largeur maximale pour le texte */
+      text-align: center;
+    }
+
+    h2, p {
+      color: black;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+<div class="container my-5 my-section">
+  <h1 class="text-center text-primary">Supply Chain Parfumerie (Blockchain GS16)</h1>
+  <hr>
+
+  <!-- Section Création de produit -->
+  <div class="my-4 my-section">
+    <h2>Créer un nouveau produit</h2>
+    <div class="input-group mb-3">
+      <input type="text" id="productName" class="form-control" placeholder="Nom du parfum" required>
+      <button class="btn btn-success" onclick="createProductWithAuth()">Créer le parfum</button>
+    </div>
+  </div>
+
+
+
+  <!-- Section Mise à jour de l'état -->
+  <div class="my-4 my-section">
+    <h2>Mettre à jour l'état du produit</h2>
+    <div class="row g-2 mb-3">
+      <div class="col-md-6">
+        <input type="number" id="productId" class="form-control" placeholder="ID du produit">
+      </div>
+      <div class="col-md-6">
+        <select id="productState" class="form-select">
+          <option value="0">Fabriqué</option>
+          <option value="1">Expédié</option>
+          <option value="2">Livré</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn btn-warning" onclick="updateProductStateWithAuth()">Mettre à jour</button>
+  </div>
+
+  <!-- Section Récupération d'information -->
+  <div class="my-4 my-section">
+    <h2>Récupérer les informations d'un produit</h2>
+    <div class="input-group mb-3">
+      <input type="number" id="productIdInfo" class="form-control" placeholder="ID du produit">
+      <button class="btn btn-dark" onclick="getProductWithAuth()">Récupérer les informations</button>
+    </div>
+    <div id="productInfo" class="alert alert-secondary"></div>
+  </div>
+</div>
+
+<!-- Bootstrap JS Bundle (optional) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Web3.js -->
+<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.3.0/dist/web3.min.js"></script>
+<!-- App JS -->
+<script src="app.js"></script>
+</body>
+</html>
